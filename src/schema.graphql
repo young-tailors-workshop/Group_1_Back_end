@@ -1,0 +1,58 @@
+type Query {
+  feed(skip: Int, first: Int): Feed!
+  me: User
+  getCategory(id: String!): Category! 
+  getPost(id: String!): Post! 
+}
+
+type Mutation {
+  createPost(title: String!, description: String!, categoryID: String!): Post!
+  createTask(content: String!, process: Int!, postID: String!): Task!
+  editTask(content: String!, process: Int!, taskID: String!): Task!
+  editPost(title: String!, description: String!, postID: String!): Post!
+  login(username: String!, password: String!): AuthPayload
+  signUp(username: String!, password: String!, avatar: String): AuthPayload
+}
+
+type AuthPayload {
+  user: User
+  token: String
+}
+
+type Feed {
+  posts: [Post!]!
+}
+
+type User {
+  id: ID!
+  username: String!
+  password: String!
+  avatar: String!
+  posts: [Post!]!
+}
+
+type Post {
+  id: ID!
+  title: String!
+  description: String!
+  user: User!
+  category: Category!
+  task: [Task!]!
+}
+
+type Task {
+  id: ID!
+  content: String!
+  process: Int!
+  post: Post!
+}
+
+type Category {
+  id: ID!
+  name: String!
+  posts: [Post!]
+}
+
+type Subscription {
+  newPost: Post!
+}
